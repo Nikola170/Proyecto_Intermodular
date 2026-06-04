@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Equipo 2 — Contáctanos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #111;
+      color: #ddd;
+      font-family: 'Barlow', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 60px;
+      border-bottom: 1px solid #222;
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: #f0ede8;
+    }
+    nav a {
+      color: #999;
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-left: 32px;
+      transition: color 0.2s;
+    }
+    nav a:hover, nav a.active { color: #f0ede8; }
+
+    /* ── Main ── */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+    }
+    .contact-box { width: 100%; max-width: 580px; }
+
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 14px;
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 52px;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #f0ede8;
+      margin-bottom: 18px;
+      line-height: 1.05;
+    }
+    .intro {
+      font-size: 14px;
+      color: #777;
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    /* ── Form ── */
+    .field { margin-bottom: 22px; }
+    label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    input, textarea {
+      width: 100%;
+      background: transparent;
+      border: 1px solid #333;
+      border-radius: 3px;
+      color: #e0e0e0;
+      font-family: 'Barlow', sans-serif;
+      font-size: 14px;
+      padding: 13px 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input::placeholder, textarea::placeholder { color: #444; }
+    input:focus, textarea:focus { border-color: #666; }
+    textarea { height: 120px; resize: none; }
+
+    button {
+      margin-top: 6px;
+      background: transparent;
+      border: 1px solid #555;
+      color: #ccc;
+      font-family: 'Barlow', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 15px 36px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    button:hover:not(:disabled) { background: #1e1e1e; border-color: #888; color: #f0ede8; }
+    button:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .msg {
+      margin-top: 16px;
+      font-size: 13px;
+      display: none;
+    }
+    .msg.ok  { display: block; color: #6fcf97; }
+    .msg.err { display: block; color: #eb5757; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: #444;
+      border-top: 1px solid #1e1e1e;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">EQUIPO 2</div>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="contacto.html" class="active">Contáctanos</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="contact-box">
+      <p class="eyebrow">Estamos aquí</p>
+      <h1>Contáctanos</h1>
+      <p class="intro">Cuéntanos sobre tu proyecto. Nos pondremos en contacto contigo en menos de 24 horas.</p>
+
+      <div class="field">
+        <label for="f-nombre">Nombre</label>
+        <input id="f-nombre" type="text" placeholder="Tu nombre completo"/>
+      </div>
+      <div class="field">
+        <label for="f-email">Correo electrónico</label>
+        <input id="f-email" type="email" placeholder="correo@ejemplo.com"/>
+      </div>
+      <div class="field">
+        <label for="f-mensaje">Mensaje</label>
+        <textarea id="f-mensaje" placeholder="Describe tu proyecto o consulta..."></textarea>
+      </div>
+
+      <button id="btn" onclick="enviar()">Enviar mensaje →</button>
+      <p id="ok"  class="msg">✓ Mensaje enviado. Te respondemos en menos de 24 h.</p>
+      <p id="err" class="msg">✗ Error al enviar. Inténtalo de nuevo.</p>
+    </div>
+  </main>
+
+  <footer>EQUIPO 2 © 2026</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    emailjs.init("TkhtxbHvWawCe1sz7");
+
+    function enviar() {
+      var nombre  = document.getElementById("f-nombre").value.trim();
+      var email   = document.getElementById("f-email").value.trim();
+      var mensaje = document.getElementById("f-mensaje").value.trim();
+      var btn     = document.getElementById("btn");
+
+      document.getElementById("ok").className  = "msg";
+      document.getElementById("err").className = "msg";
+
+      if (!nombre || !email || !mensaje) {
+        alert("Por favor rellena todos los campos.");
+        return;
+      }
+
+      btn.disabled     = true;
+      btn.textContent  = "Enviando...";
+
+      emailjs.send("service-proyecto", "template_g5aermg", {
+        nombre:  nombre,
+        email:   email,
+        correo:  email,
+        message: mensaje
+      }).then(function() {
+        document.getElementById("ok").className = "msg ok";
+        document.getElementById("f-nombre").value  = "";
+        document.getElementById("f-email").value   = "";
+        document.getElementById("f-mensaje").value = "";
+        btn.disabled    = false;
+        btn.textContent = "Enviar mensaje →";
+      }).catch(function(err) {
+        console.error("EmailJS error:", err);
+        document.getElementById("err").className = "msg err";
+        btn.disabled    = false;
+        btn.textContent = "Enviar mensaje →";
+      });
+    }
+  </script>
+
+</body>
+</html>
