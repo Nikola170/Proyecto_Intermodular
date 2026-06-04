@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contáctanos</title>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+      font-family: 'Georgia', serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 620px;
+      width: 100%;
+    }
+
+    .eyebrow {
+      font-family: 'Arial', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: #888;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: 'Georgia', serif;
+      font-size: 48px;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #f0ede8;
+      margin-bottom: 20px;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+      color: #999;
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+
+    .field {
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 8px;
+    }
+
+    input, textarea {
+      width: 100%;
+      background: transparent;
+      border: 1px solid #444;
+      border-radius: 4px;
+      color: #e0e0e0;
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      resize: none;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #555;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #888;
+    }
+
+    textarea {
+      height: 110px;
+    }
+
+    button {
+      margin-top: 8px;
+      background: #2a2a2a;
+      border: 1px solid #555;
+      color: #e0e0e0;
+      font-family: 'Arial', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 16px 32px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    button:hover {
+      background: #333;
+      border-color: #888;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .arrow { font-size: 16px; }
+
+    .msg {
+      margin-top: 16px;
+      font-family: 'Arial', sans-serif;
+      font-size: 13px;
+      display: none;
+    }
+    .msg.ok  { color: #6fcf97; display: block; }
+    .msg.err { color: #eb5757; display: block; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p class="eyebrow">Estamos aquí</p>
+    <h1>Contáctanos</h1>
+    <p class="subtitle">Cuéntanos sobre tu proyecto. Nos pondremos en contacto contigo en menos de 24 horas.</p>
+
+    <div class="field">
+      <label for="nombre">Nombre</label>
+      <input id="nombre" type="text" placeholder="Tu nombre completo"/>
+    </div>
+
+    <div class="field">
+      <label for="email">Correo electrónico</label>
+      <input id="email" type="email" placeholder="correo@ejemplo.com"/>
+    </div>
+
+    <div class="field">
+      <label for="mensaje">Mensaje</label>
+      <textarea id="mensaje" placeholder="Describe tu proyecto o consulta..."></textarea>
+    </div>
+
+    <button id="btn" onclick="enviar()">
+      Enviar mensaje <span class="arrow">→</span>
+    </button>
+
+    <p class="msg" id="msg-ok">✓ Mensaje enviado correctamente. Te respondemos en menos de 24 h.</p>
+    <p class="msg" id="msg-err">✗ Error al enviar. Comprueba tu conexión e inténtalo de nuevo.</p>
+  </div>
+
+  <script>
+    emailjs.init("TkhtxbHvWawCe1sz7");
+
+    function enviar() {
+      const nombre  = document.getElementById("nombre").value.trim();
+      const email   = document.getElementById("email").value.trim();
+      const mensaje = document.getElementById("mensaje").value.trim();
+      const btn     = document.getElementById("btn");
+
+      if (!nombre || !email || !mensaje) {
+        alert("Por favor rellena todos los campos.");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "Enviando...";
+
+      emailjs.send("service-proyecto", "template_itadp9d", {
+        from_name:    nombre,
+        from_email:   email,
+        message:      mensaje,
+      })
+      .then(() => {
+        document.getElementById("msg-ok").classList.add("ok");
+        document.getElementById("nombre").value  = "";
+        document.getElementById("email").value   = "";
+        document.getElementById("mensaje").value = "";
+        btn.disabled = false;
+        btn.innerHTML = 'Enviar mensaje <span class="arrow">→</span>';
+      })
+      .catch(() => {
+        document.getElementById("msg-err").classList.add("err");
+        btn.disabled = false;
+        btn.innerHTML = 'Enviar mensaje <span class="arrow">→</span>';
+      });
+    }
+  </script>
+</body>
+</html>
