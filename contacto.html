@@ -76,8 +76,9 @@
       btn.textContent = "Enviando...";
 
       emailjs.send("service-proyecto", "template_g5aermg", {
-        from_name:  nombre,
-        from_email: email,
+        title:   "Formulario web JNAG",
+        name:    nombre,
+        email:   email,
         message:    mensaje,
       })
       .then(() => {
