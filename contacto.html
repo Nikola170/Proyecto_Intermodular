@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Equipo 2 — Contáctanos</title>
+  <link rel="stylesheet" href="estilos.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>emailjs.init("TkhtxbHvWawCe1sz7");</script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">EQUIPO 2</div>
+      <nav class="nav">
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="contacto.html" class="nav-link active">Contáctanos</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="contact-main">
+    <div class="contact-box">
+      <p class="eyebrow">Estamos aquí</p>
+      <h1 class="headline contact-headline">CONTÁCTANOS</h1>
+      <p class="body-text contact-intro">
+        Cuéntanos sobre tu proyecto. Nos pondremos en contacto contigo en menos de 24 horas.
+      </p>
+      <div class="form-group">
+        <label class="form-label">Nombre</label>
+        <input id="nombre" type="text" class="form-input" placeholder="Tu nombre completo" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Correo electrónico</label>
+        <input id="email" type="email" class="form-input" placeholder="correo@ejemplo.com" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mensaje</label>
+        <textarea id="mensaje" class="form-input form-textarea" placeholder="Describe tu proyecto o consulta..."></textarea>
+      </div>
+      <button id="send-btn" class="cta-btn send-btn" onclick="enviar()">Enviar mensaje →</button>
+      <p id="msg-ok" style="display:none;margin-top:14px;color:#6fcf97;font-family:'Barlow',sans-serif;font-size:13px;">✓ Mensaje enviado. Te respondemos en menos de 24 h.</p>
+      <p id="msg-err" style="display:none;margin-top:14px;color:#eb5757;font-family:'Barlow',sans-serif;font-size:13px;">✗ Error al enviar. Comprueba tu conexión e inténtalo de nuevo.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span class="footer-brand">EQUIPO 2 © 2026</span>
+    </div>
+  </footer>
+
+</body>
+</html>
+
+  <script>
+    function enviar() {
+      const nombre  = document.getElementById("nombre").value.trim();
+      const email   = document.getElementById("email").value.trim();
+      const mensaje = document.getElementById("mensaje").value.trim();
+      const btn     = document.getElementById("send-btn");
+      const msgOk   = document.getElementById("msg-ok");
+      const msgErr  = document.getElementById("msg-err");
+
+      msgOk.style.display  = "none";
+      msgErr.style.display = "none";
+
+      if (!nombre || !email || !mensaje) {
+        alert("Por favor rellena todos los campos.");
+        return;
+      }
+
+      btn.disabled    = true;
+      btn.textContent = "Enviando...";
+
+      emailjs.send("service-proyecto", "template_itadp9d", {
+        from_name:  nombre,
+        from_email: email,
+        message:    mensaje,
+      })
+      .then(() => {
+        msgOk.style.display = "block";
+        document.getElementById("nombre").value  = "";
+        document.getElementById("email").value   = "";
+        document.getElementById("mensaje").value = "";
+        btn.disabled    = false;
+        btn.textContent = "Enviar mensaje →";
+      })
+      .catch(() => {
+        msgErr.style.display = "block";
+        btn.disabled    = false;
+        btn.textContent = "Enviar mensaje →";
+      });
+    }
+  </script>
